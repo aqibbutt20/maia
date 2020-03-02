@@ -33,7 +33,7 @@ function submitClickHandler(){
 
 //add users to database
 function addUserToDataBase(){
-  var email = document.getElementById("maia_user_email").value;
+  var email = document.getElementById("email").value;
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function(){
     if(xhr.status === 200){
@@ -48,17 +48,29 @@ function addUserToDataBase(){
 
 function cancelClickHandler(){
   document.getElementById("popup").style.display = "none";
-  window.removeEventListener("onmouseout")
+  document.removeEventListener("onmouseout", onMouseOut)
 }
 
+function onEmailChange(){
+  var email = document.getElementById("email").value;
+  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))
+  {
+    document.getElementById("popup__button").disabled = false;
+    document.getElementById("popup__button").style.backgroundColor = "green";
+  }
+  else{
+    document.getElementById("popup__button").disabled = true;
+    document.getElementById("popup__button").style.backgroundColor = "grey";
+  }
+}
 //returns candidate modal
 function createModalElem(){
   return '<div id="popup" class="popup__wrapper">' +
   '<div class="popup__container">' +
   '<h1 class="popup__title">HEY! BEFORE YOU LEAVE!</h1>' +
   '<p class="popup__text">Please enter your email for future opportunities</p>' +
-  '<div><input id="email" onchange="onEmailChange()" class="popup__input" type="text" name="email" /></div>' +
-  '<div><button class="popup__button" onclick="submitClickHandler()" >Submit</button></div>'+
+  '<div><input id="email" onkeyup="onEmailChange()" class="popup__input" type="text" name="email" /></div>' +
+  '<div><button disabled id="popup__button" class="popup__button" onclick="submitClickHandler()" >Submit</button></div>'+
   '<div><button class="popup__button__cancel" onclick="cancelClickHandler()" >Cancel</button></div>'+
   '</div>' +
   '</div>'

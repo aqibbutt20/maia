@@ -18,7 +18,7 @@ class Api::V1::UsersController < ApplicationController
 
   private
     def set_client
-      @client = Client.find_by(secret_key: params[:domain])
+      @client = Client.find__or_create_by(secret_key: params[:domain])
       render_error_message('Client not Found') unless @client.present?
     end
 

@@ -1,25 +1,11 @@
-# maia
+# Maia
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Following are the steps to get Maia up and running.
 
-Things you may want to cover:
+* Run `bundle install`
 
-* Ruby version
+* Run `rake db:create`
 
-* System dependencies
+* Run `rake db:migrate`
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
+* Run `rails s`

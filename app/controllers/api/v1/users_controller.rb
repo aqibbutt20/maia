@@ -1,5 +1,6 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :set_user_and_client, only: %i[create]
+  before_action :set_client, only: %i[create]
+  before_action :set_user, only: %i[create]
 
   def index
     @users = User.all
@@ -7,20 +8,21 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def create
-    if @user.nil?
-      @user = User.new email: params[:email]
-
-      if @client.users.find_or_create_by email: @user.email
-        render json: {status: 200}
-      else
-        render json: {status: 500, message: 'Unable to create user'}
-      end
+    begin
+      @client.users.find_or_create_by email: @user.email
+      render json: {status: 200}
+    rescue Exception => e
+      render_error_message("User not created", 500)
     end
   end
 
   private
-  def set_user
-    @client = Client.find_by secret_key: params[:domain]
-  end
+    def set_client
+      @client = Client.find_by(secret_key: params[:domain])
+      render_error_message('Client not Found') unless @client.present?
+    end
 
+    def set_user
+      @user = User.find_or_initialize_by(email: params[:email])
+    end
 end

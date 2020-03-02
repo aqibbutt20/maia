@@ -1,6 +1,6 @@
-class CreateAssignments < ActiveRecord::Migration[5.1]
+class CreateClientUsers < ActiveRecord::Migration[5.1]
   def change
-    create_table :assignments do |t|
+    create_table :client_users do |t|
       t.references :user
       t.references :client
       t.timestamps

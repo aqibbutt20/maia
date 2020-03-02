@@ -1,4 +1,4 @@
 class Client < ApplicationRecord
-  has_many :assignments, dependent: :destroy
-  has_many :users, through: :assignments
+  has_many :client_users, dependent: :destroy
+  has_many :users, through: :client_users
 end
